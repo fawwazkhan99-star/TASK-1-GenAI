@@ -14,7 +14,7 @@ import requests
 # --------------------------------------------------------------------------
 # Configuration
 # --------------------------------------------------------------------------
-OLLAMA_BASE_URL = ""https://football-emperor-pelt.ngrok-free.dev""
+OLLAMA_BASE_URL = "https://football-emperor-pelt.ngrok-free.dev"
 OLLAMA_CHAT_ENDPOINT = f"{OLLAMA_BASE_URL}/api/chat"
 OLLAMA_TAGS_ENDPOINT = f"{OLLAMA_BASE_URL}/api/tags"
 
