@@ -18,6 +18,12 @@ OLLAMA_BASE_URL = "https://football-emperor-pelt.ngrok-free.dev"
 OLLAMA_CHAT_ENDPOINT = f"{OLLAMA_BASE_URL}/api/chat"
 OLLAMA_TAGS_ENDPOINT = f"{OLLAMA_BASE_URL}/api/tags"
 
+# Ngrok header to bypass the status 403 warning page
+NGROK_HEADERS = {
+    "ngrok-skip-browser-warning": "true",
+    "User-Agent": "StreamlitApp"
+}
+
 # Change this to whichever model you have pulled with `ollama pull <model>`
 DEFAULT_MODEL = "llama3.2"
 
@@ -52,7 +58,7 @@ def check_ollama_connection() -> tuple[bool, str]:
     Returns (is_connected, message).
     """
     try:
-        response = requests.get(OLLAMA_TAGS_ENDPOINT, timeout=5)
+        response = requests.get(OLLAMA_TAGS_ENDPOINT, headers=NGROK_HEADERS, timeout=5)
         if response.status_code == 200:
             return True, "Connected to Ollama."
         return False, f"Ollama responded with status code {response.status_code}."
@@ -67,7 +73,7 @@ def check_ollama_connection() -> tuple[bool, str]:
 def get_available_models() -> list[str]:
     """Fetch the list of models currently pulled in Ollama. Returns [] on failure."""
     try:
-        response = requests.get(OLLAMA_TAGS_ENDPOINT, timeout=5)
+        response = requests.get(OLLAMA_TAGS_ENDPOINT, headers=NGROK_HEADERS, timeout=5)
         if response.status_code == 200:
             data = response.json()
             return [model["name"] for model in data.get("models", [])]
@@ -91,6 +97,7 @@ def query_ollama(model: str, conversation: list[dict]) -> tuple[bool, str]:
         response = requests.post(
             OLLAMA_CHAT_ENDPOINT,
             json=payload,
+            headers=NGROK_HEADERS,
             timeout=REQUEST_TIMEOUT_SECONDS,
         )
 
@@ -175,7 +182,7 @@ with st.sidebar:
         A simple demo chatbot that runs entirely on your machine:
         - Frontend: **Streamlit**
         - Inference: **Ollama** (local, no cloud API)
-        - Endpoint: `http://localhost:11434`
+        - Endpoint: `https://football-emperor-pelt.ngrok-free.dev`
 
         Built for academic / demo purposes.
         """
