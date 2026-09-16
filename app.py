@@ -2,7 +2,7 @@
 Local Ollama LLM Streamlit Chat Interface
 -------------------------------------------
 A simple, beginner-friendly Streamlit chatbot that talks to a locally
-hosted LLM through Ollama's local REST API (http://localhost:11434).
+hosted LLM through Ollama's local REST API ("https://football-emperor-pelt.ngrok-free.dev").
 
 Run with:
     streamlit run app.py
@@ -14,7 +14,7 @@ import requests
 # --------------------------------------------------------------------------
 # Configuration
 # --------------------------------------------------------------------------
-OLLAMA_BASE_URL = "http://localhost:11434"
+OLLAMA_BASE_URL = ""https://football-emperor-pelt.ngrok-free.dev""
 OLLAMA_CHAT_ENDPOINT = f"{OLLAMA_BASE_URL}/api/chat"
 OLLAMA_TAGS_ENDPOINT = f"{OLLAMA_BASE_URL}/api/tags"
 
